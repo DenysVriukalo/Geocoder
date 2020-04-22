@@ -1,22 +1,23 @@
-const nominatim = require('nominatim-client');
+const Nominatim = require('nominatim-geocoder');
 
-// Set the global settings here
-nominatim.global({
-    useragent: "MyApp",             // The name of your application
-    referer: 'http://example.com',  // The referer link
-    email: 'user@example.com'       // The valid email
+const geocoder = new Nominatim({
+	delay: 1000, // delay between requests
+	secure: false, // enables ssl
+	host:'nominatim.openstreetmap.org',
 });
-
-// The query
-const query = {
-    q: 'Avenue Monseigneur Vogt, Yaounde, Cameroon',
-    addressdetails: '1'
+	
+const getGeocode = async(qwery) => {
+	try {
+		geocoder.search( { q: qwery }).then((response) => {
+			console.log(response)
+		})
+		.catch((error) => {
+			console.log(error)
+		})
+	}
+	catch(error) {
+		console.error(error);
+	};	
 };
 
-nominatim.search(query, function(err, data) {
-    if (err) {
-        throw err;
-    }
-    
-    console.log(data);
-});
+const request = getGeocode("Kharkiv, Ukraine");
