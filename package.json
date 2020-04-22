@@ -1,0 +1,22 @@
+{
+  "name": "geocoder",
+  "version": "1.0.0",
+  "description": "App for getting coordinates from toponyms",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DenysVriukalo/Geocoder.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DenysVriukalo/Geocoder/issues"
+  },
+  "homepage": "https://github.com/DenysVriukalo/Geocoder#readme",
+  "dependencies": {
+    "nominatim-client": "^1.0.1"
+  }
+}
