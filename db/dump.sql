@@ -53,9 +53,9 @@ DROP TABLE IF EXISTS `uploaded_file`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `uploaded_file` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `file_name` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
   `user_id` int(11) NOT NULL,
-  `file_content` varchar(10000) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `content` varchar(10000) COLLATE utf8_unicode_ci DEFAULT NULL,
   `uploaded_at` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id_idx` (`user_id`),
@@ -81,12 +81,12 @@ DROP TABLE IF EXISTS `user`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_full_name` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
-  `user_email` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
-  `user_password` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
+  `full_name` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
   `created_at` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `user_email_UNIQUE` (`user_email`)
+  UNIQUE KEY `user_email_UNIQUE` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -108,4 +108,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-23 13:10:00
+-- Dump completed on 2020-04-25 13:53:52
