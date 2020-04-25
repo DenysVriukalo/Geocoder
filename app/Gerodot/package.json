@@ -1,0 +1,26 @@
+{
+  "name": "gerodot",
+  "version": "1.0.0",
+  "description": "geocoding app",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DenysVriukalo/Geocoder.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DenysVriukalo/Geocoder/issues"
+  },
+  "homepage": "https://github.com/DenysVriukalo/Geocoder#readme",
+  "dependencies": {
+    "nominatim-client": "^1.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.3"
+  }
+}
