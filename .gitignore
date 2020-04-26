@@ -61,10 +61,10 @@ typings/
 .yarn-integrity
 
 # dotenv file
-# .env
-# .env.dev
-# .env.uat
-# .env.prod
+.env
+.env.dev
+.env.uat
+.env.prod
 
 .DS_Store
 
