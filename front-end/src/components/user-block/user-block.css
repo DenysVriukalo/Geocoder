@@ -1,13 +1,15 @@
 .header .user-block {
-  max-width: 466px;
-  width: 30%;
+  width: calc(30% - 90px);
   padding-bottom: 10px;
   border-bottom: 2px solid var(--yellow);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .user-info {
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
   align-items: center;
 }
 
@@ -24,7 +26,7 @@
 
 .user-info__name {
   color: var(--gray-dark);
-  margin-right: 64px;
+  margin-right: 12px;
 }
 
 

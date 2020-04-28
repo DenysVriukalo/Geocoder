@@ -6,8 +6,8 @@ const UserBlock = ({ avatar, name, children }) => (
     <div className="user-info">
       <div className="user-info__avatar">{avatar}</div>
       <div className="user-info__name">{name}</div>
-      {children}
     </div>
+    {children}
   </div>
 );
 
