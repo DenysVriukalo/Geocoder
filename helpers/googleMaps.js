@@ -15,14 +15,9 @@ const geocoder = NodeGeocoder(options);
 
 // Fetch one address
 
-const geoOneAddress = (qwery) => {
+const geoOneAddress = async ({ address }) => {
 	try {
-		geocoder.geocode(qwery).then((response) => {
-			console.log(response)
-		})
-		.catch((error) => {
-			console.log(error)
-		})
+		return await geocoder.geocode(address);
 	}
 	catch(error) {
 		console.error(error);
@@ -32,14 +27,9 @@ const geoOneAddress = (qwery) => {
 
 // Batch geocode
 
-const geoBatch = (qwery) => {
+const geoBatch = async ({ batch }) => {
 	try {
-		geocoder.batchGeocode(qwery).then((response) => {
-			response.forEach(res =>console.log(res.value))
-		})
-		.catch((error) => {
-			console.log(error)
-		})
+		return await geocoder.batchGeocode(JSON.parse(batch));
 	}
 	catch(error) {
 		console.error(error);
@@ -50,3 +40,4 @@ const geoBatch = (qwery) => {
 // 	'Kharkiv Ukraine',
 // 	'Kiev Ukraine'
 // ]);
+module.exports = { geoOneAddress, geoBatch };

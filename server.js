@@ -1,5 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const geocodeRoute = require("./routes/geocodeRoute")
 const cors = require("cors");
 
 const app = express();
@@ -21,6 +22,7 @@ app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use('/api', geocodeRoute);
 // simple route
 app.get("/", (req, res) => {
     res.end('Hello World!')
