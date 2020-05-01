@@ -3,7 +3,7 @@
   padding-bottom: 10px;
   border-bottom: 2px solid var(--yellow);
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
 }
 
@@ -26,7 +26,7 @@
 
 .user-info__name {
   color: var(--gray-dark);
-  margin-right: 12px;
+  margin-right: 70px;
 }
 
 

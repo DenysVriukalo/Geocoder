@@ -9,9 +9,15 @@
 }
 
 .btn:hover {
-  background-color: #1ab196;
+  background-color: #14b9d0;
+  color: var(--white);
 }
 
-.btn-lg {
+.btn__lg {
   padding: 12px 38px;
+}
+
+.btn__secondary {
+  background-color: transparent;
+  color: var(--gray-dark);
 }

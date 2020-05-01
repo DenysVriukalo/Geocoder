@@ -1,7 +1,6 @@
 import React from 'react';
-
-import { Header, FormLayout, MapLayout } from '../layouts'
-
+import { Route } from 'react-router-dom';
+import { HomePage } from '../pages';
 import './app.css';
 
 function App() {
@@ -9,9 +8,7 @@ function App() {
     <div className="wrapper">
       <div className="content-outer">
 
-        <Header />
-        <MapLayout />
-        <FormLayout />
+        <Route path="/" component={HomePage} />
 
       </div>
     </div>

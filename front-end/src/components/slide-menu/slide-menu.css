@@ -11,7 +11,17 @@
   position: relative;
   background-color: var(--blue);
   border: 1px solid var(--yellow);
-  transition: 2s;
+  transition: 1s;
+}
+
+.right-side__content > .btn-slide {
+  position: absolute;
+  top: 50%;
+  left: 8px;
+}
+
+.right-side__content > .btn {
+  margin-right: auto;
 }
 
 .right-side__bg-image {

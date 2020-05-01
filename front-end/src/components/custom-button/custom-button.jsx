@@ -1,9 +1,9 @@
 import React from 'react';
 import './custom-button.css';
 
-const CustomButton = ({ large, text, ...otherProps }) => (
+const CustomButton = ({ secondary, large, text, ...otherProps }) => (
   <button
-    className={`btn ${large ? "btn-lg" : ""}`}
+    className={`btn ${large ? "btn__lg" : ""} ${secondary ? 'btn__secondary' : ''}`}
     {...otherProps}
   >
     {text}

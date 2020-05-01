@@ -18,7 +18,12 @@ const SlideMenu = ({ children }) => {
           <img src="/images/gerodot.png" alt="gerodot" />
         </div>
         <div className="right-side__content">
-          <SlideButton hidden={hidden} onClick={() => setHidden(!hidden)} />
+          <SlideButton
+            hidden={hidden}
+            color='yellow'
+            size='large'
+            onClick={() => setHidden(!hidden)}
+          />
           {children}
         </div>
       </div>
