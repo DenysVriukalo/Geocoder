@@ -17,6 +17,9 @@ module.exports = (sequelize, Sequelize) => {
         },
         uploaded_file_id: {
             type: Sequelize.INTEGER
+        },
+        user_id: {
+            type: Sequelize.INTEGER
         }
     });
   
