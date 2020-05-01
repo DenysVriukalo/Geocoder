@@ -1,12 +1,36 @@
-import React from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import './google-map.css';
 
-const GoogleMap = props => (
-  <div className="map-container">
-    <iframe className="map"
-      src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d15075.856517643759!2d34.48635579031671!3d48.94325255723831!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sua!4v1587678852479!5m2!1sen!2sua"
-      style={{ height: '100%', width: '100%' }}></iframe>
-  </div>
-);
+export default function GoogleMap({ options, onMount, className, onMountProps }) {
+  const ref = useRef();
+  const [map, setMap] = useState();
+  
+  useEffect(() => {
+    const onLoad = () => setMap(new window.google.maps.Map(ref.current, options))
+    if (!window.google) {
+      const script = document.createElement(`script`);
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`;
+      document.head.append(script);
+      script.addEventListener(`load`, onLoad);
+      return () => script.removeEventListener(`load`, onLoad);
+    } else onLoad();
+  }, [options])
 
-export default GoogleMap;
+  if (map && typeof onMount === `function`) onMount(map, onMountProps)
+
+  return (
+    <div className="map-container">
+      <div 
+        style={{ height: `100%`, borderRadius: `20px`, overflow: `hidden`, border: `1px solid var(--yellow)`}}
+        {...{ ref, className }}
+      />
+    </div>
+  )
+}
+
+GoogleMap.defaultProps = {
+  options: {
+    center: { lat: 48.3794, lng: 31.1656 },
+    zoom: 6,
+  },
+};
