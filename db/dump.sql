@@ -28,10 +28,13 @@ CREATE TABLE `geopoint` (
   `lat` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
   `lon` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
   `place_id` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `uploaded_file_id` int(11) NOT NULL,
+  `uploaded_file_id` int(11) DEFAULT NULL,
+  `user_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_geodata_uploaded_files1_idx` (`uploaded_file_id`),
-  CONSTRAINT `fk_geodata_uploaded_files1` FOREIGN KEY (`uploaded_file_id`) REFERENCES `uploaded_file` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `fk_geopoint_user1_idx` (`user_id`),
+  CONSTRAINT `fk_geodata_uploaded_files1` FOREIGN KEY (`uploaded_file_id`) REFERENCES `uploaded_file` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_geopoint_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -108,4 +111,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-25 13:53:52
+-- Dump completed on 2020-05-01 18:01:46
