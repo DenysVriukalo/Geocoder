@@ -5,12 +5,12 @@ const Op = db.Sequelize.Op;
 exports.create = (geopoint) => {
     console.log(req)
     res.send(
-        {
+        JSON.stringify({
             id: 19,
             lat: '49°47\'01.6"N',
             lon: '36°06\'15.6"E',
             placeId: 'fd78ag9adf'
-        } 
+        })
     );
 
     //DB insert

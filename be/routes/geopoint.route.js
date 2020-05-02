@@ -4,4 +4,4 @@ module.exports = app => {
     var router = require("express").Router();
   
     router.post("/geopoint",  geopoint.create);
-  };
+};
