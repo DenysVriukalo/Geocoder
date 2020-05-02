@@ -10,8 +10,8 @@ exports.create = (uploadedFile) => {
             geopoints: [
                 {
                     id: 19,
-                    lat: '49°47\'01.6"N',
-                    lon: '36°06\'15.6"E',
+                    lat: 49.779120,
+                    lon: 36.112769,
                     placeId: 'fd78ag9adf'
                 }
             ]

@@ -3,6 +3,8 @@ const bodyParser = require("body-parser");
 const geocodeRoute = require("./routes/geocodeRoute")
 const cors = require("cors");
 
+dotenv.config({path: '/config/config.env'})
+
 const app = express();
 app.use(function (req, res, next) {
     console.log('Time:', Date.now());
