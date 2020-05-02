@@ -15,6 +15,8 @@ module.exports = (sequelize, Sequelize) => {
         place_id: {
             type: Sequelize.CHAR(50)
         },
+
+        
         uploaded_file_id: {
             type: Sequelize.INTEGER
         },
@@ -23,5 +25,5 @@ module.exports = (sequelize, Sequelize) => {
         }
     });
   
-    return UploadedFile;
+    return Geopoint;
 };

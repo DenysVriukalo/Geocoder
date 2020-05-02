@@ -6,9 +6,13 @@ module.exports = (sequelize, Sequelize) => {
         name: {
             type: Sequelize.CHAR(60)
         },
+
+
         user_id: {
             type: Sequelize.INTEGER
         },
+
+        
         content: {
             type: Sequelize.TEXT
         },
