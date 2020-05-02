@@ -1,17 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, BrowserRouter } from 'react-router-dom';
+import {  Router } from 'react-router-dom';
 import App from './app';
 import './index.css';
+import { createBrowserHistory } from 'history';
 
-require('dotenv').config()
-
+const history = createBrowserHistory();
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
+    <Router history={history}>
       <App />
-    </BrowserRouter>
+    </Router>
   </React.StrictMode>,
   document.getElementById('root')
 );
