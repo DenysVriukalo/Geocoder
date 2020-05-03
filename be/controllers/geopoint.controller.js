@@ -2,7 +2,7 @@ const db = require("../models");
 const Geopoint = db.geopoint;
 const Op = db.Sequelize.Op;
 
-exports.create = (geopoint) => {
+exports.create = (req, res) => {
     console.log(req)
     res.send(
         JSON.stringify({
@@ -12,7 +12,6 @@ exports.create = (geopoint) => {
             placeId: 'fd78ag9adf'
         })
     );
-
     //DB insert
     /*return Geopoint.create({
         address: geopoint.address,

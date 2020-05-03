@@ -1,7 +1,9 @@
-module.exports = app => {
-    const geopoint = require("../controllers/geopoint.controller.js");
-  
-    var router = require("express").Router();
-  
-    router.post("/geopoint",  geopoint.create);
-};
+const express = require('express');
+const geopoint = require('../controllers/geopoint.controller');
+const router = express.Router();
+
+router.post('/geopoint', (req, res) => {
+    geopoint.create(req, res);
+})
+
+module.exports = router;

@@ -2,7 +2,7 @@ const db = require("../models");
 const UploadedFile = db.uploadedFile;
 const Op = db.Sequelize.Op;
 
-exports.create = (uploadedFile) => {
+exports.create = (req, res) => {
     console.log(req)
     res.send(
         JSON.stringify({
