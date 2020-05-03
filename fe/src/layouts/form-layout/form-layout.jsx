@@ -9,6 +9,7 @@ import {
 } from '../../components';
 import './form-layout.css';
 
+
 const FormLayout = p => {
   let content;
   const [contentType, setContentType] = useState('form');
@@ -23,22 +24,50 @@ const FormLayout = p => {
 
   const [file, setFile] = useState('');
   const [location, setLocation] = useState('');
+  const [places, setPlaces] = useState([]);
+
+  const getCoordinates = async (address) => {
+    try {
+      const location = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?language=en&address=${address}&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`);
+      const locationData = await location.json();
+      return locationData.results[0];
+    } 
+    catch (error) {
+        console.log(error);
+    }
+  };
+
+  const sendCoordinatesToDB = (coordinates) => {
+    console.log("coordinates", coordinates);
+  };
+
+
+  
 
   function onFileUpload() { }
-  function onSearch() { }
+   
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    let coordinates = await getCoordinates(location);
+    setPlaces([{
+      coords: { lat: coordinates.geometry.location.lat, lng: coordinates.geometry.location.lng }, // required: latitude & longitude at which to display the marker
+      title: coordinates.formatted_address, // optional
+    }]);
+    sendCoordinatesToDB(coordinates);
+  };
 
   if (contentType === 'form')
     content = (<>
-      <FormBlock color="green" onSubmit={onSearch}>
-        <PrimaryText>Enter Place</PrimaryText>
+      <FormBlock color="green" onSubmit={handleSubmit}>
+        <PrimaryText>Search Place</PrimaryText>
         <FormInput
           type="text"
-          placeholder="Enter Something Here"
+          placeholder="Enter Your Address Here"
           value={location}
           onChange={e => setLocation(e.target.value)}
         />
         <div className="d-flex justify-space-between">
-          <CustomButton type="submit" text="Search" />
+          <CustomButton type="submit" text="Search"/>
           <CustomButton secondary text="Open history" onClick={() => setContentType('story_adress')} />
         </div>
       </FormBlock>
