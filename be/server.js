@@ -17,13 +17,18 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(function (req, res, next) {
     console.log('Time:', Date.now());
     next();
-  });
+});
 
 const db = require("./models");
+
+//------------------------------
 db.sequelize.sync();
+
+//Use this to update database structure
 /*db.sequelize.sync({ force: true }).then(() => {
   console.log("Drop and re-sync db.");
 });*/
+//------------------------------
 
 var corsOptions = {
   origin: "http://localhost:8081"

@@ -9,7 +9,7 @@ module.exports = (sequelize, Sequelize) => {
         lon: {
             type: Sequelize.CHAR(15)
         },
-        place_id: {
+        placeId: {
             type: Sequelize.CHAR(50)
         },
     });
