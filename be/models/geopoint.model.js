@@ -1,8 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
     const Geopoint = sequelize.define("geopoint", {
-        id: {
-            type: Sequelize.INTEGER
-        },
         address: {
             type: Sequelize.CHAR(200)
         },
@@ -12,16 +9,10 @@ module.exports = (sequelize, Sequelize) => {
         lon: {
             type: Sequelize.CHAR(15)
         },
-        place_id: {
+        placeId: {
             type: Sequelize.CHAR(50)
         },
-        uploaded_file_id: {
-            type: Sequelize.INTEGER
-        },
-        user_id: {
-            type: Sequelize.INTEGER
-        }
     });
   
-    return UploadedFile;
+    return Geopoint;
 };

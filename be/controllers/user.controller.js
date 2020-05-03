@@ -1,9 +1,21 @@
 const db = require("../models");
-const Tutorial = db.tutorials;
+const User = db.user;
 const Op = db.Sequelize.Op;
 
-exports.create = (req, res) => {
-  
+exports.create = (user) => {
+    return User.create({
+        fullName: user.fullName,
+        email: user.email,
+        password: user.password,
+        createdAt: user.createdAt
+    })
+    .then((user) => {
+        console.log(">> Created user: " + JSON.stringify(user, null, 4));
+        return user;
+    })
+    .catch((err) => {
+        console.log(">> Error while creating user: ", err);
+    });
 };
 
 exports.findAll = (req, res) => {

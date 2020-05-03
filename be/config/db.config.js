@@ -1,7 +1,10 @@
+const dotenv = require("dotenv");
+dotenv.config();
+
 module.exports = {
     HOST: "localhost",
-    USER: "guest",
-    PASSWORD: "guestpass",
+    USER: process.env.MYSQL_DB_USER,
+    PASSWORD: process.env.MYSQL_DB_PASSWORD,
     DB: "gerodot",
     dialect: "mysql",
     pool: {
