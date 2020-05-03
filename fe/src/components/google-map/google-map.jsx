@@ -6,9 +6,6 @@ import { functions, isEqual, omit } from 'lodash'
 function GoogleMap({ options, onMount, places }) {
   const ref = useRef();
   const [map, setMap] = useState();
-  // const [places, setPlaces] = useState();
-  // console.log("places", places)
-
 
   useEffect(() => {
     const onLoad = () => setMap(new window.google.maps.Map(ref.current, options))
@@ -21,20 +18,7 @@ function GoogleMap({ options, onMount, places }) {
     } else onLoad();
   }, [options])
 
-  /**  Example
-    const place = {
-      coords: { lat: 42, lng: 42 }, // required: latitude & longitude at which to display the marker
-      title: `Mashrooms here`, // optional
-      url: `https://en.wikipedia.org/wiki/Amanita`, // optional
-    }
-  */
-
-
-  useEffect(() => {
-    if (places !== undefined) {
-      if (map && typeof onMount === `function`) onMount(map, places)
-    }
-  }, [onMount, map, places]);
+  if (map && typeof onMount === `function`) onMount(map, places)
   
   return (
     <div className="map-container">

@@ -1,4 +1,4 @@
-import React, { useState }from 'react';
+import React from 'react';
 import { GoogleMap } from '../../components';
 import './map-layout.css';
 
@@ -17,12 +17,12 @@ const MapLayout = () => {
       })
     })
   };
-  const [places, setPlaces] = useState();
-  // const places = [{
-  //   coords: { lat: 49.9935, lng: 36.2304 }, // required: latitude & longitude at which to display the marker
-  //   title: `Mashrooms here`, // optional
-  //   url: `https://en.wikipedia.org/wiki/Amanita`, // optional
-  // }]
+ 
+  const places = [{
+    coords: { lat: 49.9935, lng: 36.2304 }, // required: latitude & longitude at which to display the marker
+    title: `Mashrooms here`, // optional
+    url: `https://en.wikipedia.org/wiki/Amanita`, // optional
+  }]
 
   return (
   <div className="side left-side">

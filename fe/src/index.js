@@ -5,9 +5,6 @@ import { Provider } from 'react-redux'
 import store from './redux';
 import App from './app';
 import './index.css';
-import { createBrowserHistory } from 'history';
-
-const history = createBrowserHistory();
 
 ReactDOM.render(
   <React.StrictMode>

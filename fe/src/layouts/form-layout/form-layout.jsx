@@ -24,7 +24,7 @@ const FormLayout = p => {
 
   const [file, setFile] = useState('');
   const [location, setLocation] = useState('');
-  const [places, setPlaces] = useState([]);
+  
 
   const getCoordinates = async (address) => {
     try {
@@ -49,10 +49,12 @@ const FormLayout = p => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     let coordinates = await getCoordinates(location);
-    setPlaces([{
+  /**  TODO Save places do redux
+   *   const places =[{
       coords: { lat: coordinates.geometry.location.lat, lng: coordinates.geometry.location.lng }, // required: latitude & longitude at which to display the marker
       title: coordinates.formatted_address, // optional
-    }]);
+    }];
+  */
     sendCoordinatesToDB(coordinates);
   };
 
