@@ -16,90 +16,102 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `geopoint`
+-- Table structure for table `geopoints`
 --
 
-DROP TABLE IF EXISTS `geopoint`;
+DROP TABLE IF EXISTS `geopoints`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `geopoint` (
+CREATE TABLE `geopoints` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `address` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
-  `lat` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
-  `lon` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
-  `place_id` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `address` char(200) DEFAULT NULL,
+  `lat` char(15) DEFAULT NULL,
+  `lon` char(15) DEFAULT NULL,
+  `place_id` char(50) DEFAULT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  `userId` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `uploadedFileId` int(11) DEFAULT NULL,
   `uploaded_file_id` int(11) DEFAULT NULL,
-  `user_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_geodata_uploaded_files1_idx` (`uploaded_file_id`),
-  KEY `fk_geopoint_user1_idx` (`user_id`),
-  CONSTRAINT `fk_geodata_uploaded_files1` FOREIGN KEY (`uploaded_file_id`) REFERENCES `uploaded_file` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `fk_geopoint_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  KEY `userId` (`userId`),
+  KEY `user_id` (`user_id`),
+  KEY `uploadedFileId` (`uploadedFileId`),
+  KEY `uploaded_file_id` (`uploaded_file_id`),
+  CONSTRAINT `geopoints_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `geopoints_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `geopoints_ibfk_3` FOREIGN KEY (`uploadedFileId`) REFERENCES `uploaded_files` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `geopoints_ibfk_4` FOREIGN KEY (`uploaded_file_id`) REFERENCES `uploaded_files` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `geopoint`
+-- Dumping data for table `geopoints`
 --
 
-LOCK TABLES `geopoint` WRITE;
-/*!40000 ALTER TABLE `geopoint` DISABLE KEYS */;
-/*!40000 ALTER TABLE `geopoint` ENABLE KEYS */;
+LOCK TABLES `geopoints` WRITE;
+/*!40000 ALTER TABLE `geopoints` DISABLE KEYS */;
+/*!40000 ALTER TABLE `geopoints` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `uploaded_file`
+-- Table structure for table `uploaded_files`
 --
 
-DROP TABLE IF EXISTS `uploaded_file`;
+DROP TABLE IF EXISTS `uploaded_files`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `uploaded_file` (
+CREATE TABLE `uploaded_files` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `content` varchar(10000) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `uploaded_at` int(11) NOT NULL,
+  `name` char(60) DEFAULT NULL,
+  `content` text,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  `userId` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `user_id_idx` (`user_id`),
-  CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  KEY `userId` (`userId`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `uploaded_files_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `uploaded_files_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `uploaded_file`
+-- Dumping data for table `uploaded_files`
 --
 
-LOCK TABLES `uploaded_file` WRITE;
-/*!40000 ALTER TABLE `uploaded_file` DISABLE KEYS */;
-/*!40000 ALTER TABLE `uploaded_file` ENABLE KEYS */;
+LOCK TABLES `uploaded_files` WRITE;
+/*!40000 ALTER TABLE `uploaded_files` DISABLE KEYS */;
+/*!40000 ALTER TABLE `uploaded_files` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `user`
+-- Table structure for table `users`
 --
 
-DROP TABLE IF EXISTS `user`;
+DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `user` (
+CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `full_name` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
-  `email` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
-  `password` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
-  `created_at` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `user_email_UNIQUE` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `full_name` char(60) DEFAULT NULL,
+  `email` char(60) DEFAULT NULL,
+  `password` char(45) DEFAULT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `user`
+-- Dumping data for table `users`
 --
 
-LOCK TABLES `user` WRITE;
-/*!40000 ALTER TABLE `user` DISABLE KEYS */;
-/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -111,4 +123,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-05-01 18:01:46
+-- Dump completed on 2020-05-03 14:02:35
