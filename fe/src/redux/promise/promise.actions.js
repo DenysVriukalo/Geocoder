@@ -1,4 +1,4 @@
-export const actionClear = name => ({ type: promiseTypes.CLEAR, name });
+export const actionClear = name => ({ type: 'CLEAR', name });
 
 export const actionPromise = (name, promise) => {
   const actionPending = () => ({ type: 'PROMISE', name, status: 'PENDING', payload: null, error: null });

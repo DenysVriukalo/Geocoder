@@ -1,16 +1,24 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import {
+  actionSetPlacesByUserInput,
+  actionSetPlacesByUserUpload,
+  actionSetPlacesByHistoryAddressId,
+  actionSetPlacesByHistoryFileId
+} from '../../redux/places-to-show/places-to-show.actions';
 import {
   SlideMenu,
   FormBlock,
   FormInput,
   CustomButton,
   PrimaryText,
-  StoryList
+  HistoryList
 } from '../../components';
+import fileHelper from '../../utils/allowed-file-formats';
 import './form-layout.css';
 
 
-const FormLayout = p => {
+const FormLayout = ({ onLocationUpload, onFileUpload, onSetLocationByHistoryAddress, onSetLocationByHistoryFile }) => {
   let content;
   const [contentType, setContentType] = useState('form');
 
@@ -24,43 +32,29 @@ const FormLayout = p => {
 
   const [file, setFile] = useState('');
   const [location, setLocation] = useState('');
-  
 
-  const getCoordinates = async (address) => {
-    try {
-      const location = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?language=en&address=${address}&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`);
-      const locationData = await location.json();
-      return locationData.results[0];
-    } 
-    catch (error) {
-        console.log(error);
-    }
-  };
-
-  const sendCoordinatesToDB = (coordinates) => {
-    console.log("coordinates", coordinates);
-  };
-
-
-  
-
-  function onFileUpload() { }
-   
-  const handleSubmit = async (e) => {
+  const handleLocationSubmit = e => {
     e.preventDefault();
-    let coordinates = await getCoordinates(location);
-  /**  TODO Save places do redux
-   *   const places =[{
-      coords: { lat: coordinates.geometry.location.lat, lng: coordinates.geometry.location.lng }, // required: latitude & longitude at which to display the marker
-      title: coordinates.formatted_address, // optional
-    }];
-  */
-    sendCoordinatesToDB(coordinates);
+    location && onLocationUpload(location);
   };
+
+  const handleFileSubmit = e => {
+    e.preventDefault();
+    file && onFileUpload(file)
+  }
+
+  const onFileChange = e => {
+    const newFile = e.target.files[0];
+    console.log(newFile);
+    if (fileHelper.isTypeAllowed(newFile.type)) {
+      console.log('valid')
+      setFile(newFile);
+    } else console.log('invalid file type')
+  }
 
   if (contentType === 'form')
     content = (<>
-      <FormBlock color="green" onSubmit={handleSubmit}>
+      <FormBlock color="green" onSubmit={handleLocationSubmit}>
         <PrimaryText>Search Place</PrimaryText>
         <FormInput
           type="text"
@@ -69,36 +63,56 @@ const FormLayout = p => {
           onChange={e => setLocation(e.target.value)}
         />
         <div className="d-flex justify-space-between">
-          <CustomButton type="submit" text="Search"/>
-          <CustomButton secondary text="Open history" onClick={() => setContentType('story_adress')} />
+          <CustomButton type="submit" text="Search" />
+          <CustomButton secondary text="Open history" onClick={() => setContentType('history_adress')} />
         </div>
       </FormBlock>
 
-      <FormBlock color="yellow" onSubmit={onFileUpload}>
+      <FormBlock color="yellow" onSubmit={handleFileSubmit}>
         <PrimaryText>Choose File</PrimaryText>
         <FormInput
           type="file"
           name="file"
           placeholder={file.name || "File Not Uploaded"}
-          onChange={e => setFile(e.target.files[0])}
+          onChange={onFileChange}
         />
         <div className="d-flex justify-space-between">
           <CustomButton type="submit" text="Upload" />
-          <CustomButton secondary text="Open uploaded" onClick={() => setContentType('story_upload')} />
+          <CustomButton secondary text="Open uploaded" onClick={() => setContentType('history_upload')} />
         </div>
       </FormBlock>
     </>)
 
-  if (contentType === 'story_adress')
+  if (contentType === 'history_adress')
     content = (<>
-      <StoryList listItems={listItems} bgColor='green' adress />
-      <CustomButton onClick={() => setContentType('form')} secondary large text='Back to Search' />
+      <HistoryList
+        onHistoryItemClick={onSetLocationByHistoryAddress}
+        listItems={listItems}
+        bgColor='green'
+        adress
+      />
+      <CustomButton
+        onClick={() => setContentType('form')}
+        text='Back to Search'
+        secondary
+        large
+      />
     </>)
 
-  if (contentType === 'story_upload')
+  if (contentType === 'history_upload')
     content = (<>
-      <StoryList listItems={listItems} bgColor='yellow' upload />
-      <CustomButton onClick={() => setContentType('form')} secondary large text='Back to Search' />
+      <HistoryList
+        onHistoryItemClick={onSetLocationByHistoryFile}
+        listItems={listItems}
+        bgColor='yellow'
+        upload
+      />
+      <CustomButton
+        onClick={() => setContentType('form')}
+        text='Back to Search'
+        secondary
+        large
+      />
     </>)
 
   return (
@@ -108,4 +122,11 @@ const FormLayout = p => {
   );
 }
 
-export default FormLayout;
+const mapDispatchToProps = {
+  onLocationUpload: actionSetPlacesByUserInput,
+  onFileUpload: actionSetPlacesByUserUpload,
+  onSetLocationByHistoryAddress: actionSetPlacesByHistoryAddressId,
+  onSetLocationByHistoryFile: actionSetPlacesByHistoryFileId
+}
+
+export default connect()(FormLayout);

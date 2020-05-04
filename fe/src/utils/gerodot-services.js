@@ -2,26 +2,32 @@ const API_URL = '';
 
 export default class GerodotServices {
 
-  static postRegistration = (userInfo) => {
+  static postRegistration = async userInfo => {
     // Регистрация
   }
 
-  static postLogin = (login, password) => {
+  static postLogin = async (login, password) => {
     // Логин
   }
 
-  static postSingleAddress = (address) => {
+  static getCoordinatesFromGoogleApi = async address => {
+    const res = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?language=en&address=${address}&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`)
+    const locationData = await res.json();
+    return locationData.results[0];
+  }
 
-    return fetch(`${API_URL}`, {
+  static postCoordinates = async coordinates => {
+    const res = await fetch(`${API_URL}`, {
       method: 'POST',
       headers: {
         'Authorization': 'Bearer ' + localStorage.authToken
       },
-      body: '' // TODO: ---- JSON OBJECT
+      body: JSON.stringify(coordinates)
     });
+    // в ответ id записи?
   }
 
-  static postFile = (file) => {
+  static postFile = async file => {
     const formData = new FormData();
     formData.append('file', file);
 
@@ -35,11 +41,19 @@ export default class GerodotServices {
     })
   }
 
-  static getSingleAddressHistory = () => {
+  static getAddressHistory = async () => {
     // Получение истории одиночных адрессов
   }
 
-  static getFileHistory = () => {
+  static getFileHistory = async () => {
     // Получение истории файлов
+  }
+
+  static getCoordinatesById = async id => {
+    // get coords by id
+  }
+
+  static getFileCoordinatesById = async id => {
+    // get fileCoords by id
   }
 }
