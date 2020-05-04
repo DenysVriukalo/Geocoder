@@ -5,14 +5,14 @@ const cors = require("cors");
 const path = require("path");
 const dotenv = require("dotenv");
 
+process.env.MYSQL_DB_USER = 'guest';
+process.env.MYSQL_DB_PASSWORD = 'guestpass';
+
 dotenv.config({path: '/config/config.env'})
 
 const app = express();
 app.use(express.json());
 app.use(cors(corsOptions));
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(function (req, res, next) {
     console.log('Time:', Date.now());

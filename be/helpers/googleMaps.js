@@ -4,10 +4,10 @@ dotenv.config();
 
 
 const options = {
-  provider: 'google',
-  // Optional depending on the providers
+  provider: process.env.GEOCODER_PROVIDER,
+  httpAdapter: 'https',
   //fetch: customFetchImplementation,
-  apiKey: process.env.GOOGLE_MAPS_API_KEY,
+  apiKey: process.env.GEOCODER_MAPS_API_KEY,
   formatter: null // 'gpx', 'string', ...
 };
 
@@ -15,7 +15,7 @@ const geocoder = NodeGeocoder(options);
 
 // Fetch one address
 
-const geoOneAddress = async ({ address }) => {
+const geoSingle = async ({ address }) => {
 	try {
 		return await geocoder.geocode(address);
 	}
@@ -40,4 +40,4 @@ const geoBatch = async ({ batch }) => {
 // 	'Kharkiv Ukraine',
 // 	'Kiev Ukraine'
 // ]);
-module.exports = { geoOneAddress, geoBatch };
+module.exports = { geoSingle, geoBatch };

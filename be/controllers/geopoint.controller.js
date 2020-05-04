@@ -1,39 +1,37 @@
 const db = require("../models");
 const Geopoint = db.geopoint;
 const Op = db.Sequelize.Op;
+const geocoder = require("../utils/geocoder");
 
 exports.create = (req, res) => {
-    console.log(req);
 
     //Geocode query
-    //
-
-    //DB insert
-    console.log(req.body.address + "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-
-    Geopoint.create({
-        address: req.address,
-        lat: null,
-        lon: null,
-        placeId: null,
-        userId: null,
-        uploadedFileId: null
-    }).then((comment) => {
-        console.log(">> Created geopoint: " + JSON.stringify(comment, null, 4));
-        return comment;
-    }).catch((err) => {
-        console.log(">> Error while creating geopoint: ", err);
-    });
-
-    //Response
-    res.send(
-        JSON.stringify({
-            id: 19,
-            lat: 49.779120,
-            lon: 36.112769,
-            placeId: 'fd78ag9adf'
-        })
-    );
+    geocoder.geocode(req.body.address)
+    .then((loc)=>{
+        //Saving in DB
+        Geopoint.create({
+            address: loc[0].formattedAddress,
+            lat: loc[0].latitude,
+            lon: loc[0].longitude,
+            placeId: loc[0].extra.googlePlaceId,
+            userId: req.body.userId,
+            uploadedFileId: req.body.uploadedFileId
+        }).then((geopoint) => {
+            console.log(">> Created geopoint: " + JSON.stringify(geopoint, null, 4));        
+            //Response
+            res.send(
+                JSON.stringify({
+                    id: geopoint.id,
+                    lat: geopoint.lat,
+                    lon: geopoint.lon,
+                    placeId: geopoint.placeId
+                })
+            );
+            return comment;
+        }).catch((err) => {
+            console.log(">> Error while creating geopoint: ", err);
+        });
+    })
 };
 
 exports.findAll = (req, res) => {
