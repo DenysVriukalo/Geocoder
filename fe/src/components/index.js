@@ -6,13 +6,14 @@ import FormBlock from './form-block/form-block';
 import FormInput from './form-input/form-input';
 import UserBlock from './user-block/user-block';
 import SlideMenu from './slide-menu/slide-menu';
-import StoryListItem from './story-list-item/story-list-item';
-import StoryList from './story-list/story-list';
+import HistoryListItem from './history-list-item/history-list-item';
+import HistoryList from './history-list/history-list';
 import Logo from './logo/logo';
 
 export {
-  StoryListItem,
+  HistoryListItem,
   CustomButton,
+  HistoryList,
   PrimaryText,
   SlideButton,
   GoogleMap,
@@ -20,6 +21,5 @@ export {
   FormInput,
   UserBlock,
   SlideMenu,
-  StoryList,
   Logo
 };

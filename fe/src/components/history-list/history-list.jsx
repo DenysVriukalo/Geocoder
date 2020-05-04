@@ -1,13 +1,13 @@
 import React from 'react';
-import { StoryListItem } from '../'
+import { HistoryListItem } from '../'
 import { SlideButton } from '../'
-import './story-list.css';
+import './history-list.css';
 
-const StoryList = ({ bgColor, listItems }) => {
+const HistoryList = ({ bgColor, listItems }) => {
   return (
     <div
-      className={`story-list 
-        ${bgColor ? 'story-list__' + bgColor : ''}
+      className={`history-list 
+        ${bgColor ? 'history-list__' + bgColor : ''}
       `}
     >
       <SlideButton
@@ -18,13 +18,12 @@ const StoryList = ({ bgColor, listItems }) => {
         onClick={() => console.log('slide-left clicked')}
       />
 
-      <ul className="story-list-content">
+      <ul className="history-list-content">
         {
           listItems.map(item =>
-            <StoryListItem
+            <HistoryListItem
               item={item}
               key={item.id}
-              // onClick={onStoryListItemClick}
             />
           )
         }
@@ -42,4 +41,4 @@ const StoryList = ({ bgColor, listItems }) => {
 
 }
 
-export default StoryList;
+export default HistoryList;
