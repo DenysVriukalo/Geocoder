@@ -10,7 +10,7 @@ exports.create = (req, res) => {
     .then((loc)=>{
         //Saving in DB
         Geopoint.create({
-            address: loc[0].formattedAddress,
+            address: req.body.address,
             lat: loc[0].latitude,
             lon: loc[0].longitude,
             placeId: loc[0].extra.googlePlaceId,
