@@ -27,7 +27,7 @@ exports.create = (req, res) => {
                     placeId: geopoint.placeId
                 })
             );
-            return comment;
+            return geopoint;
         }).catch((err) => {
             console.log(">> Error while creating geopoint: ", err);
         });
