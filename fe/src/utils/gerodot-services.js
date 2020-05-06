@@ -1,4 +1,5 @@
-const API_URL = '';
+const API_URL_ADDRESS = 'http://localhost:8080/geopoint';
+const API_URL_FILE = 'http://localhost:8080/uploadedFile';
 
 export default class GerodotServices {
 
@@ -17,7 +18,7 @@ export default class GerodotServices {
   }
 
   static postCoordinates = async coordinates => {
-    const res = await fetch(`${API_URL}`, {
+    const res = await fetch(`${API_URL_ADDRESS}`, {
       method: 'POST',
       headers: {
         'Authorization': 'Bearer ' + localStorage.authToken
@@ -31,7 +32,7 @@ export default class GerodotServices {
     const formData = new FormData();
     formData.append('file', file);
 
-    return fetch(`${API_URL}`, {
+    return fetch(`${API_URL_FILE}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
