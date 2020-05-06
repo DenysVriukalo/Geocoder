@@ -14,7 +14,7 @@ exports.create = (req, res) => {
             lat: loc[0].latitude,
             lon: loc[0].longitude,
             placeId: loc[0].extra.googlePlaceId,
-            userId: req.body.userId,
+            //userId: req.body.userId,
             uploadedFileId: req.body.uploadedFileId
         }).then((geopoint) => {
             console.log(">> Created geopoint: " + JSON.stringify(geopoint, null, 4));        
