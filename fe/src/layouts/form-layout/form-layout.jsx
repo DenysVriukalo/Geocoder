@@ -143,4 +143,4 @@ const mapDispatchToProps = {
   onSetLocationByHistoryFile: actionSetPlacesByHistoryFileId
 }
 
-export default connect()(FormLayout);
+export default connect(null, mapDispatchToProps)(FormLayout);
