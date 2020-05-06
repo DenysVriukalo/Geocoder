@@ -16,6 +16,7 @@ import {
 } from '../../components';
 import fileHelper from '../../utils/allowed-file-formats';
 import './form-layout.css';
+import axios from 'axios';
 
 
 const FormLayout = ({ onLocationUpload, onFileUpload, onSetLocationByHistoryAddress, onSetLocationByHistoryFile }) => {
