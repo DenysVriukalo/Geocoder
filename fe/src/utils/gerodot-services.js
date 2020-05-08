@@ -30,21 +30,23 @@ export default class GerodotServices {
       },
       body: JSON.stringify(coordinates)
     });
-    // в ответ id записи?
+
+    return await res.json();
   }
 
   static postFile = async file => {
     const formData = new FormData();
     formData.append('file', file);
 
-    return fetch(`${API_URL_FILE}`, {
+    const res = await fetch(`${API_URL_FILE}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + localStorage.authToken
       },
-      body: formData // TODO: ---- JSON OBJECT
-    })
+      body: formData
+    });
+    return await res.json();
   }
 
   static getAddressHistory = async () => {
