@@ -35,8 +35,41 @@ exports.create = (req, res) => {
 };
 
 exports.findAllSinglePage = (req, res) => {
-  
+    var pageIndex = req.body.pageindex;
+
+    var maxPage = Geopoint.count({
+        col: 'id',
+        where: { uploadedFileId: null }
+    }).catch((err) => {
+        console.log(">> Error while counting geopoints: ", err);
+        return 0;
+    });
+
+    Geopoint.findAll({
+        attributes: ['id', 'address'],
+        where: { uploadedFileId: null //,userId: id
+         },
+        offset: ((index - 1) * 10),
+        raw: true,
+        order: [['createdAt', 'DESC']],
+        limit: 10
+    }).then(geopoints => {
+        console.log(geopoints);
+        res.send(JSON.stringify({ maxPages: maxPage, geopoints }))
+    }).catch((err) => {
+        console.log(">> Error while searching geopoints: ", err);
+    });
 };
+
+exports.findOneGeopoint = (req, res) => {
+    var geoID = req.body.id;
+    Geopoint.findByPk(geoId)
+        .then(geopoint => {
+            res.send(JSON.stringify(geopoint));
+        }).catch((err) => {
+            console.log(">> Error while searching geopoint: ", err);
+        });
+} 
 
 exports.findAll = (req, res) => {
   
