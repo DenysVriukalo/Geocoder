@@ -1,5 +1,3 @@
-const geocoder = require('../utils/geocoder');
-
 module.exports = (sequelize, Sequelize) => {
     const Geopoint = sequelize.define(
         "geopoint",

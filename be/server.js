@@ -1,25 +1,14 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const geocodeRoute = require("./routes/geocodeRoute")
+const db = require("./models");
 const cors = require("cors");
 const path = require("path");
 const dotenv = require("dotenv");
 
-process.env.MYSQL_DB_USER = 'guest';
-process.env.MYSQL_DB_PASSWORD = 'guestpass';
-
-dotenv.config({path: '/config/config.env'})
+dotenv.config({path: "/config/config.env"})
 
 const app = express();
-app.use(express.json());
-app.use(cors(corsOptions));
-
-app.use(function (req, res, next) {
-    console.log('Time:', Date.now());
-    next();
-});
-
-const db = require("./models");
 
 //------------------------------
 //db.sequelize.sync();
@@ -40,10 +29,20 @@ app.get("/", (req, res) => {
     res.send('Hello World!')
 });
 
-//Routes
+const middleware = [
+  express.json(),
+  cors(corsOptions),  
+  function (req, res, next) {
+        console.log('Time:', Date.now());
+        next();
+    },
+
+];
+app.use(middleware);
 app.use('/', require('./routes/geopoint.route.js'));
 app.use('/', require('./routes/user.route.js'));
 app.use('/', require('./routes/uploadedFile.route.js'));
+
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {

@@ -6,18 +6,19 @@ const geocoder = require("../utils/geocoder");
 exports.create = (req, res) => {
 
     //Geocode query
+    console.log(req.body.address);
     geocoder.geocode(req.body.address)
-    .then((loc)=>{
+    .then((geocodedPlace)=>{
         //Saving in DB
+        console.log(geocodedPlace);
         Geopoint.create({
             address: req.body.address,
-            lat: loc[0].latitude,
-            lon: loc[0].longitude,
-            placeId: loc[0].extra.googlePlaceId,
+            lat: geocodedPlace[0].latitude,
+            lon: geocodedPlace[0].longitude,
+            placeId: geocodedPlace[0].extra.googlePlaceId,
             //userId: req.body.userId,
             uploadedFileId: req.body.uploadedFileId
-        }).then((geopoint) => {
-            console.log(">> Created geopoint: " + JSON.stringify(geopoint, null, 4));        
+        }).then((geopoint) => {   
             //Response
             res.send(
                 JSON.stringify({
@@ -33,6 +34,8 @@ exports.create = (req, res) => {
         });
     })
 };
+
+
 
 exports.findAllSinglePage = (req, res) => {
   

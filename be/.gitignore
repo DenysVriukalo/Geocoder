@@ -65,6 +65,7 @@ typings/
 .env.dev
 .env.uat
 .env.prod
+**config.env
 
 .DS_Store
 
