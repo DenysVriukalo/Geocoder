@@ -1,6 +1,3 @@
-const dotenv = require("dotenv");
-dotenv.config();
-
 module.exports = {
     HOST: "localhost",
     USER: process.env.MYSQL_DB_USER,

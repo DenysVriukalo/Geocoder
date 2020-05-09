@@ -1,12 +1,10 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const geocodeRoute = require("./routes/geocodeRoute")
-const db = require("./models");
 const cors = require("cors");
 const path = require("path");
-const dotenv = require("dotenv");
-
-dotenv.config({path: "/config/config.env"})
+require("dotenv").config({path: "./config/config.env"});
+const geocodeRoute = require("./routes/geocodeRoute")
+const db = require("./models");
 
 const app = express();
 
