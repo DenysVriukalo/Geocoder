@@ -1,11 +1,17 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+
 import {
   actionSetPlacesByUserInput,
   actionSetPlacesByUserUpload,
   actionSetPlacesByHistoryAddressId,
   actionSetPlacesByHistoryFileId
 } from '../../redux/places-to-show/places-to-show.actions';
+import {
+  actionGetAddressesPage,
+  actionGetFilesPage
+} from '../../redux/history/history.actions';
+
 import {
   SlideMenu,
   FormBlock,
@@ -21,22 +27,19 @@ import { ToastContainer, toast } from 'react-toastify';
 
 
 
-const FormLayout = ({ onLocationUpload, onFileUpload, onSetLocationByHistoryAddress, onSetLocationByHistoryFile }) => {
+const FormLayout = ({
+  history, onLocationUpload, onFileUpload,
+  onSetPlacesByHistoryAddress, onSetPlacesByHistoryFile,
+  onGetAddressPage, onGetFilesPage }) => {
+
   let content;
   const [contentType, setContentType] = useState('form');
 
-  const listItems = [
-    { id: "123123", name: "Kharkiv, Gorkiy Park" },
-    { id: "1231da23", name: "Kharkiv, Shevchenko Garden" },
-    { id: "12312xZx3", name: "Kharkiv, Gorkiy Park" },
-    { id: "123123cc", name: "Kharkiv, Shevchenko Garden" },
-    { id: "123123zxc", name: "Kharkiv, Shevchenko Garden" }
-  ];
 
   const [file, setFile] = useState('');
   const [location, setLocation] = useState('');
 
-  
+
 
   const handleLocationSubmit = e => {
     e.preventDefault();
@@ -49,9 +52,9 @@ const FormLayout = ({ onLocationUpload, onFileUpload, onSetLocationByHistoryAddr
   }
 
   const unSupported = (fileType) => {
-      toast.error(fileType + ' is not a supported format\n', {
-          position: toast.POSITION.BOTTOM_RIGHT
-        })
+    toast.error(fileType + ' is not a supported format\n', {
+      position: toast.POSITION.BOTTOM_RIGHT
+    })
   };
 
   const onFileChange = e => {
@@ -60,8 +63,8 @@ const FormLayout = ({ onLocationUpload, onFileUpload, onSetLocationByHistoryAddr
       console.log('valid')
       setFile(newFile);
     } else unSupported(newFile.type)
-     
-  
+
+
   }
 
   if (contentType === 'form')
@@ -88,22 +91,27 @@ const FormLayout = ({ onLocationUpload, onFileUpload, onSetLocationByHistoryAddr
           placeholder={file.name || "File Not Uploaded"}
           onChange={onFileChange}
         />
-        <div className="d-flex justify-space-between">          
+        <div className="d-flex justify-space-between">
           <CustomButton type="submit" text="Upload" />
           <CustomButton secondary text="Open uploaded" onClick={() => setContentType('history_upload')} />
-          <ToastContainer autoClose={5000}/>
+          <ToastContainer autoClose={5000} />
         </div>
-        
+
       </FormBlock>
     </>)
 
   if (contentType === 'history_adress')
     content = (<>
       <HistoryList
-        onHistoryItemClick={onSetLocationByHistoryAddress}
-        listItems={listItems}
+        onItemClick={onSetPlacesByHistoryAddress}
+        onUpdatePage={onGetAddressPage}
+
+        listItems={history.addressesList}
+
+        pageIndex={history.addressesPageIdx}
+        maxPageIndex={history.maxAddressesPageIdx}
+
         bgColor='green'
-        adress
       />
       <CustomButton
         onClick={() => setContentType('form')}
@@ -116,10 +124,15 @@ const FormLayout = ({ onLocationUpload, onFileUpload, onSetLocationByHistoryAddr
   if (contentType === 'history_upload')
     content = (<>
       <HistoryList
-        onHistoryItemClick={onSetLocationByHistoryFile}
-        listItems={listItems}
+        onItemClick={onSetPlacesByHistoryFile}
+        onUpdatePage={onGetFilesPage}
+
+        listItems={history.filesList}
+
+        pageIndex={history.filesPageIdx}
+        maxPageIndex={history.maxFilesPageIdx}
+
         bgColor='yellow'
-        upload
       />
       <CustomButton
         onClick={() => setContentType('form')}
@@ -136,11 +149,17 @@ const FormLayout = ({ onLocationUpload, onFileUpload, onSetLocationByHistoryAddr
   );
 }
 
+const mapStateToProps = state => ({
+  history: state.history
+})
+
 const mapDispatchToProps = {
   onLocationUpload: actionSetPlacesByUserInput,
   onFileUpload: actionSetPlacesByUserUpload,
-  onSetLocationByHistoryAddress: actionSetPlacesByHistoryAddressId,
-  onSetLocationByHistoryFile: actionSetPlacesByHistoryFileId
+  onSetPlacesByHistoryAddress: actionSetPlacesByHistoryAddressId,
+  onSetPlacesByHistoryFile: actionSetPlacesByHistoryFileId,
+  onGetAddressPage: actionGetAddressesPage,
+  onGetFilesPage: actionGetFilesPage
 }
 
-export default connect(null, mapDispatchToProps)(FormLayout);
+export default connect(mapStateToProps, mapDispatchToProps)(FormLayout);

@@ -1,7 +1,15 @@
 import API_KEY from '../utils/api-key';
 
-const API_URL_ADDRESS = 'http://localhost:8080/geopoint';
-const API_URL_FILE = 'http://localhost:8080/uploadedFile';
+const API_URL = 'http://localhost:8080';
+
+const API_URL_ADDRESS = `${API_URL}/geopoint`;
+const API_URL_FILE = `${API_URL}/uploadedFile`;
+
+const API_URL_ADDRESSES_HISTORY = `${API_URL}/geopoint/history/single`
+const API_URL_FILES_HISTORY = `${API_URL}/uploadedFile/history`
+
+const API_URL_ADDRESS_BY_ID = `${API_URL}/geopoint/read`
+const API_URL_FILE_BY_ID = `${API_URL}/geopoint/history/fromFile`
 
 export default class GerodotServices {
 
@@ -49,19 +57,51 @@ export default class GerodotServices {
     return await res.json();
   }
 
-  static getAddressHistory = async () => {
+  static getAddressesHistory = async pageIndex => {
     // Получение истории одиночных адрессов
+    const res = await fetch(`${API_URL_ADDRESSES_HISTORY}`, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.authToken
+      },
+      body: JSON.stringify({ pageIndex })
+    });
+    return await res.json();
   }
 
-  static getFileHistory = async () => {
+  static getFilesHistory = async pageIndex => {
     // Получение истории файлов
+    const res = await fetch(`${API_URL_FILES_HISTORY}`, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.authToken
+      },
+      body: JSON.stringify({ pageIndex })
+    });
+    return await res.json();
   }
 
   static getCoordinatesById = async id => {
     // get coords by id
+    const res = await fetch(`${API_URL_ADDRESS_BY_ID}`, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.authToken
+      },
+      body: JSON.stringify({ id })
+    });
+    return await res.json();
   }
 
   static getFileCoordinatesById = async id => {
     // get fileCoords by id
+    const res = await fetch(`${API_URL_FILE_BY_ID}`, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.authToken
+      },
+      body: JSON.stringify({ id })
+    });
+    return await res.json();
   }
 }
