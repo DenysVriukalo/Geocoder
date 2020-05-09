@@ -16,6 +16,9 @@ import {
 } from '../../components';
 import fileHelper from '../../utils/allowed-file-formats';
 import './form-layout.css';
+import '../../css/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify';
+
 
 
 const FormLayout = ({ onLocationUpload, onFileUpload, onSetLocationByHistoryAddress, onSetLocationByHistoryFile }) => {
@@ -33,6 +36,8 @@ const FormLayout = ({ onLocationUpload, onFileUpload, onSetLocationByHistoryAddr
   const [file, setFile] = useState('');
   const [location, setLocation] = useState('');
 
+  
+
   const handleLocationSubmit = e => {
     e.preventDefault();
     location && onLocationUpload(location);
@@ -43,13 +48,20 @@ const FormLayout = ({ onLocationUpload, onFileUpload, onSetLocationByHistoryAddr
     file && onFileUpload(file)
   }
 
+  const unSupported = (fileType) => {
+      toast.error(fileType + ' is not a supported format\n', {
+          position: toast.POSITION.BOTTOM_RIGHT
+        })
+  };
+
   const onFileChange = e => {
     const newFile = e.target.files[0];
-    console.log(newFile);
     if (fileHelper.isTypeAllowed(newFile.type)) {
       console.log('valid')
       setFile(newFile);
-    } else console.log('invalid file type')
+    } else unSupported(newFile.type)
+     
+  
   }
 
   if (contentType === 'form')
@@ -76,10 +88,12 @@ const FormLayout = ({ onLocationUpload, onFileUpload, onSetLocationByHistoryAddr
           placeholder={file.name || "File Not Uploaded"}
           onChange={onFileChange}
         />
-        <div className="d-flex justify-space-between">
+        <div className="d-flex justify-space-between">          
           <CustomButton type="submit" text="Upload" />
           <CustomButton secondary text="Open uploaded" onClick={() => setContentType('history_upload')} />
+          <ToastContainer autoClose={5000}/>
         </div>
+        
       </FormBlock>
     </>)
 
@@ -129,4 +143,4 @@ const mapDispatchToProps = {
   onSetLocationByHistoryFile: actionSetPlacesByHistoryFileId
 }
 
-export default connect()(FormLayout);
+export default connect(null, mapDispatchToProps)(FormLayout);

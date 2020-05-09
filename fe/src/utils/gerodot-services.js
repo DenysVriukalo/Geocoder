@@ -1,4 +1,7 @@
-const API_URL = '';
+import API_KEY from '../utils/api-key';
+
+const API_URL_ADDRESS = 'http://localhost:8080/geopoint';
+const API_URL_FILE = 'http://localhost:8080/uploadedFile';
 
 export default class GerodotServices {
 
@@ -10,35 +13,40 @@ export default class GerodotServices {
     // Логин
   }
 
+  // Change process.env.REACT_APP_GOOGLE_MAPS_API_KEY when fixed it
   static getCoordinatesFromGoogleApi = async address => {
-    const res = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?language=en&address=${address}&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`)
+    const res = process.env.REACT_APP_GOOGLE_MAPS_API_KEY
+      ? await fetch(`https://maps.googleapis.com/maps/api/geocode/json?language=en&address=${address}&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`)
+      : await fetch(`https://maps.googleapis.com/maps/api/geocode/json?language=en&address=${address}&key=${API_KEY.REACT_APP_GOOGLE_MAPS_API_KEY}`);
     const locationData = await res.json();
     return locationData.results[0];
   }
 
   static postCoordinates = async coordinates => {
-    const res = await fetch(`${API_URL}`, {
+    const res = await fetch(`${API_URL_ADDRESS}`, {
       method: 'POST',
       headers: {
         'Authorization': 'Bearer ' + localStorage.authToken
       },
       body: JSON.stringify(coordinates)
     });
-    // в ответ id записи?
+
+    return await res.json();
   }
 
   static postFile = async file => {
     const formData = new FormData();
     formData.append('file', file);
 
-    return fetch(`${API_URL}`, {
+    const res = await fetch(`${API_URL_FILE}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + localStorage.authToken
       },
-      body: formData // TODO: ---- JSON OBJECT
-    })
+      body: formData
+    });
+    return await res.json();
   }
 
   static getAddressHistory = async () => {

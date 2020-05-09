@@ -18,8 +18,8 @@ export const actionSetPlacesByUserInput = address => async dispatch => {
 // By User File Uploaded
 export const actionSetPlacesByUserUpload = file => async dispatch => {
   const res = await dispatch(actionPromise('GerodotApi', GerodotServices.postFile(file)));
-  // if API returns id made one more fetch to get data from file
-  // TODO: ...
+  const places = res.geopoints;
+  dispatch(actionSetPlaces(places));
 };
 
 // By User History Single Address
@@ -34,6 +34,6 @@ export const actionSetPlacesByHistoryAddressId = id => async dispatch => {
 
 // By User History File
 export const actionSetPlacesByHistoryFileId = id => async dispatch => {
-  const coordinates = await dispatch(actionPromise('GerodotApi', GerodotServices.getFileCoordinatesById(id)));
-  // TODO: format data and dispatch it
+  const places = await dispatch(actionPromise('GerodotApi', GerodotServices.getFileCoordinatesById(id)));
+  dispatch(actionSetPlaces(places));
 }
