@@ -1,9 +1,19 @@
-import React from 'react';
-import { HistoryListItem } from '../'
-import { SlideButton } from '../'
+import React, { useEffect } from 'react';
+import { HistoryListItem, SlideButton } from '../'
 import './history-list.css';
 
-const HistoryList = ({ bgColor, listItems }) => {
+const HistoryList = ({ bgColor, listItems, onUpdatePage, onItemClick, pageIndex, maxPageIndex }) => {
+
+  useEffect(() => {
+    onUpdatePage(pageIndex)
+  }, [listItems]);
+
+  const onPrevPageClick = () =>
+    pageIndex > 0 && onUpdatePage(pageIndex - 1);
+
+  const onNextPageClick = () =>
+    pageIndex < maxPageIndex && onUpdatePage(pageIndex + 1);
+
   return (
     <div
       className={`history-list 
@@ -15,17 +25,13 @@ const HistoryList = ({ bgColor, listItems }) => {
         duration='left'
         size='small'
         color='blue'
-        onClick={() => console.log('slide-left clicked')}
+        onClick={onPrevPageClick}
       />
 
       <ul className="history-list-content">
         {
-          listItems.map(item =>
-            <HistoryListItem
-              item={item}
-              key={item.id}
-            />
-          )
+          listItems.length === 0 ? 'Загрузка...' : listItems.map(item =>
+            <HistoryListItem item={item} key={item.id} onClick={() => onItemClick(item.id)} />)
         }
       </ul>
 
@@ -34,7 +40,7 @@ const HistoryList = ({ bgColor, listItems }) => {
         duration='right'
         size='small'
         color='blue'
-        onClick={() => console.log('slide-right clicked')}
+        onClick={onNextPageClick}
       />
     </div>
   );
