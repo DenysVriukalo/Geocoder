@@ -5,7 +5,7 @@ const csv = require('csv-parser');
 
 
 //reading file
-var parsingExcelFile = (filename) => {
+var parseExcelFile = (filename) => {
     //open file
     //adressees - array with adresses
     var adresses = [];
@@ -29,7 +29,7 @@ var parsingExcelFile = (filename) => {
     return adresses;
 
 };
-var parsingCsvFile = (filename) => {
+var parseCsvFile = (filename) => {
     //results - array of json objects
     var adresses = [];
     //reading csv file
@@ -40,11 +40,11 @@ var parsingCsvFile = (filename) => {
     return adresses;
 };
 
-var parsingFile = (filename) => {
+var parse = (filename) => {
     if (path.extname(filename) == '.xls' || path.extname(filename) == '.xlsx')
-        return parsingExcelFile(filename);
+        return parseExcelFile(filename);
     else if (path.extname(filename) == '.csv')
-        return parsingCsvFile(filename);
+        return parseCsvFile(filename);
 };
 
-module.exports=parsingFile;
+module.exports=parse;

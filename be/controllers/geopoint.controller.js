@@ -34,6 +34,10 @@ exports.create = (req, res) => {
     })
 };
 
+exports.findAllSinglePage = (req, res) => {
+  
+};
+
 exports.findAll = (req, res) => {
   
 };

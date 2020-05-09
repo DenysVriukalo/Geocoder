@@ -6,4 +6,8 @@ router.post('/geopoint', (req, res) => {
     geopoint.create(req, res);
 })
 
+router.post('/geopoint/hist/single', (req, res) => {
+    geopoint.findAllSinglePage(req, res);
+})
+
 module.exports = router;
