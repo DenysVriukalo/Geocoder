@@ -8,13 +8,17 @@ exports.create = (user) => {
         email: user.email,
         password: user.password,
         createdAt: user.createdAt
-    })
-    .then((user) => {
+    }).catch((ex)=>
+    {
+        console.log(">>Error while user creating "+ex);
+        res.send();
+    }).then((user) => {
         console.log(">> Created user: " + JSON.stringify(user, null, 4));
         return user;
     })
     .catch((err) => {
         console.log(">> Error while creating user: ", err);
+        res.send();
     });
 };
 
