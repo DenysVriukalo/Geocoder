@@ -7,43 +7,39 @@ const geocoder = require("../utils/geocoder");
 const Geopoint = db.geopoint;
 
 exports.create = (req, res) => {
-    /*var content = fileParser.parse(req.body.file.content);
-    
-    UploadedFile.create({
-        name: req.files.file.originalFilename,
-        content: content.join('\n'),
-        userId: req.body.userId,
-    }).catch((err) => {
-        console.log(">> Error while creating uploaded file: ", err);
-    });*/
-
-    const userId = 0;
-    const fileId = 1;
-
-    //console.log(req.files.file);
     var places = fileParser.parse(req.files.file.path);
 
+    UploadedFile.create({
+        name: req.files.file.originalFilename,
+        content: places.join('\n'),
+    }).catch((err) => {
+        console.log(">> Error while creating uploaded file: ", err);
+    });
+
     geocoder.batchGeocode(places)
+    .catch((err)=>{
+        res.send();
+        console.log('>> Error while geocoding a batch: ', err);
+    })
     .then((geocodedPlaces) => {
         var geopoints = [];
         let obj = {};
-        for(var i = 0; i < geocodedPlaces.length; i++){
-            console.log(userId);
-            console.log(fileId);
-            console.log(geocodedPlaces[i].value[0]);
-
-            let geopoint = {
-                address: places[i],
-                lat: geocodedPlaces[i].value[0].latitude,
-                lon: geocodedPlaces[i].value[0].longitude,
-                placeId: geocodedPlaces[i].value[0].extra.googlePlaceId,
-                //userId: userId,
-                //uploadedFileId: fileId
-            };
-            obj = geopoint;
-            console.log(geocodedPlaces[i].value[0]);
-
-            geopoints.push(geopoint);
+        try{
+            for(var i = 0; i < geocodedPlaces.length; i++){
+            
+                let geopoint = {
+                    address: places[i],
+                    lat: geocodedPlaces[i].value[0].latitude,
+                    lon: geocodedPlaces[i].value[0].longitude,
+                    placeId: geocodedPlaces[i].value[0].extra.googlePlaceId,
+                };
+                obj = geopoint;
+                geopoints.push(geopoint);
+            }
+        }
+        catch(err){
+            res.send();
+            console.log('>> Error while geocoding a batch: ', err);
         }
         
         Geopoint.bulkCreate(geopoints)
@@ -51,9 +47,7 @@ exports.create = (req, res) => {
             console.log(">> Error while creating geopoint: ", err);
         });
 
-        res.send(
-            JSON.stringify(geopoints)
-        );
+        res.json(geopoints);
     });
     
 };
