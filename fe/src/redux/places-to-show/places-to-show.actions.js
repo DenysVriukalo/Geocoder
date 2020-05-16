@@ -6,6 +6,10 @@ const actionSetPlaces = places => ({ type: 'SET_PLACES_TO_SHOW', places });
 // By User Input
 export const actionSetPlacesByUserInput = address => async dispatch => {
   const coordinates = await dispatch(actionPromise('GoogleApi', GerodotServices.getCoordinatesFromGoogleApi(address)))
+  if (!coordinates) {
+    console.log('No response');
+    return;
+  }
   const places = [{
     // required: latitude & longitude at which to display the marker
     coords: { lat: coordinates.geometry.location.lat, lng: coordinates.geometry.location.lng },
@@ -18,6 +22,10 @@ export const actionSetPlacesByUserInput = address => async dispatch => {
 // By User File Uploaded
 export const actionSetPlacesByUserUpload = file => async dispatch => {
   const res = await dispatch(actionPromise('GerodotApi', GerodotServices.postFile(file)));
+  if (!res) {
+    console.log('No response')
+    return;
+  }
   const places = res.geopoints;
   dispatch(actionSetPlaces(places));
 };
@@ -25,6 +33,10 @@ export const actionSetPlacesByUserUpload = file => async dispatch => {
 // By User History Single Address
 export const actionSetPlacesByHistoryAddressId = id => async dispatch => {
   const coordinates = await dispatch(actionPromise('GerodotApi', GerodotServices.getCoordinatesById(id)))
+  if (!coordinates) {
+    console.log('No response');
+    return;
+  }
   const places = [{
     coords: { lat: coordinates.geometry.location.lat, lng: coordinates.geometry.location.lng },
     title: coordinates.formatted_address,
@@ -35,5 +47,9 @@ export const actionSetPlacesByHistoryAddressId = id => async dispatch => {
 // By User History File
 export const actionSetPlacesByHistoryFileId = id => async dispatch => {
   const places = await dispatch(actionPromise('GerodotApi', GerodotServices.getFileCoordinatesById(id)));
+  if (!places) {
+    console.log('No response');
+    return;
+  }
   dispatch(actionSetPlaces(places));
 }
