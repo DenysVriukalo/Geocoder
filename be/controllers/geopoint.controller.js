@@ -10,7 +10,6 @@ exports.create = (req, res) => {
     geocoder.geocode(req.body.address)
     .then((geocodedPlace)=>{
         //Saving in DB
-        console.log(geocodedPlace);
         Geopoint.create({
             address: req.body.address,
             lat: geocodedPlace[0].latitude,
@@ -48,14 +47,12 @@ exports.findAllSinglePage = (req, res) => {
 
     Geopoint.findAll({
         attributes: ['id', 'address', 'lat', 'lon', 'placeId'],
-        where: { uploadedFileId: null //,userId: id
-         },
+        where: { uploadedFileId: null  },
         offset: ((index - 1) * 10),
         raw: true,
         order: [['createdAt', 'DESC']],
         limit: 10
     }).then(geopoints => {
-        console.log(geopoints);
         res.send(JSON.stringify({ maxPages: maxPage, geopoints: geopoints }))
     }).catch((err) => {
         console.log(">> Error while searching geopoints: ", err);
@@ -76,8 +73,7 @@ exports.findAll = (req, res) => {
     var pageIndex = req.body.pageindex;
 
     var maxPage = Geopoint.count({
-        col: 'id',
-        where: { uploadedFileId: null }
+        col: 'id'
     }).catch((err) => {
         console.log(">> Error while counting geopoints: ", err);
         return 0;
@@ -90,7 +86,6 @@ exports.findAll = (req, res) => {
         order: [['createdAt', 'DESC']],
         limit: 10
     }).then(geopoints => {
-        console.log(geopoints);
         res.send(JSON.stringify({ maxPages: maxPage, geopoints: geopoints }))
     }).catch((err) => {
         console.log(">> Error while searching geopoints: ", err);
