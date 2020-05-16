@@ -36,15 +36,33 @@ var parseCsvFile = (filename) => {
     fs.createReadStream(filename)
         .pipe(csv())
         .on('data', (data) => adresses.push(data.adress))
-        .on('end', () => {    });
+        .on('end', () => { });
     return adresses;
 };
-
-var parse = (filename) => {
-    if (path.extname(filename) == '.xls' || path.extname(filename) == '.xlsx')
-        return parseExcelFile(filename);
-    else if (path.extname(filename) == '.csv')
-        return parseCsvFile(filename);
+var formingBatch = (adresses) => {
+    let batch = [];   //array with 10 adresses
+    var ads = [];     //array with n batches
+    for(let i=0;i<adresses.length;i++)
+    {
+        if (((i % 10) == 9) && (i != 0)) {
+            batch.push(adresses[i]);
+            ads.push(batch);
+            batch = [];
+        }
+        else if (i == (adresses.length - 1)) {
+            batch.push(adresses[i]);
+            ads.push(batch);
+        }
+        else batch.push(adresses[i]);
+    }
+    return ads;
 };
 
-module.exports=parse;
+var parse = (file) => {
+    if (path.extname(file.originalFilename) == '.xls' || path.extname(file.originalFilename) == '.xlsx')
+        return parseExcelFile(file.path);
+    else if (path.extname(file.originalFilename) == '.csv')
+        return parseCsvFile(file.path);
+};
+
+module.exports = parse;
