@@ -4,6 +4,7 @@ const Op = db.Sequelize.Op;
 const fs = require('fs');
 const fileParser = require("../utils/fileParser");
 const geocoder = require("../utils/geocoder");
+const Geopoint = db.geopoint;
 
 exports.create = (req, res) => {
     /*var content = fileParser.parse(req.body.file.content);
@@ -15,38 +16,45 @@ exports.create = (req, res) => {
     }).catch((err) => {
         console.log(">> Error while creating uploaded file: ", err);
     });*/
+
+    const userId = 0;
+    const fileId = 1;
+
+    console.log(req.body.file);
+    res.send();
+
+    /*geocoder.batchGeocode(req.body.addresses)
+    .then((geocodedPlaces) => {
+        var geopoints = [];
+        for(let i = 0; i < geocodedPlaces.length; i++){
+            console.log(userId);
+            console.log(fileId);
+            console.log(geocodedPlaces[i].value[0]);
+
+            let geopoint = {
+                address: req.body.addresses[i].address,
+                lat: geocodedPlaces[i].value[0].latitude,
+                lon: geocodedPlaces[i].value[0].longitude,
+                placeId: geocodedPlaces[i].value[0].extra.googlePlaceId,
+                //userId: userId,
+                //uploadedFileId: fileId
+            };
+
+            console.log(geocodedPlaces[i].value[0]);
+
+            geopoints.push(geopoint);
+        }
+        
+        Geopoint.bulkCreate(geopoints)
+        .catch((err) => {
+            console.log(">> Error while creating geopoint: ", err);
+        });
+
+        res.send(
+            JSON.stringify(geopoints)
+        );
+    });*/
     
-    var geopoints = [];
-    (async (content) => {
-        content.forEach(geopoint => {
-
-            console.log(geopoint.address);
-
-            geocoder.geocode(geopoint.address)
-            .then((geocodedPlace)=>{
-                //Saving in DB
-                console.log(geocodedPlace);
-                var geopoint = {
-                    address: geopoint.address,
-                    lat: geocodedPlace[0].latitude,
-                    lon: geocodedPlace[0].longitude,
-                    placeId: geocodedPlace[0].extra.googlePlaceId,
-                    //userId: req.body.userId,
-                    uploadedFileId: req.body.uploadedFileId
-                };
-                geopoints.prototype.push(geopoint);
-                Geopoint.create(geopoint).then((geopoint) => {
-                    return geopoint;
-                }).catch((err) => {
-                    console.log(">> Error while creating geopoint: ", err);
-                });
-            })
-        });    
-    })(req.body.addresses);
-
-    res.send(
-        JSON.stringify(geopoints)
-    );
 };
 
 exports.findAll = (req, res) => {

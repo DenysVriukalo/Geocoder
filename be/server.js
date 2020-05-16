@@ -7,6 +7,7 @@ const geocodeRoute = require("./routes/geocodeRoute")
 const db = require("./models");
 
 const app = express();
+const urlencodedParser = bodyParser.urlencoded({extended: false});
 
 //------------------------------
 //db.sequelize.sync();
@@ -22,10 +23,6 @@ var corsOptions = {
 };
 
 app.use('/api', geocodeRoute);
-
-app.get("/", (req, res) => {
-    res.send('Hello World!')
-});
 
 const middleware = [
   express.json(),

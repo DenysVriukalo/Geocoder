@@ -35,8 +35,6 @@ exports.create = (req, res) => {
     })
 };
 
-
-
 exports.findAllSinglePage = (req, res) => {
     var pageIndex = req.body.pageindex;
 
