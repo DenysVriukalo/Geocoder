@@ -1,8 +1,8 @@
 import API_KEY from '../utils/api-key';
 
-const API_URL = 'http://localhost:8080';
+const API_URL = 'http://localhost:3007';
 
-const API_URL_ADDRESS = `/geopoint`;
+const API_URL_ADDRESS = `${API_URL}/geopoint`;
 const API_URL_FILE = `/uploadedFile`;
 
 const API_URL_ADDRESSES_HISTORY = `${API_URL}/geopoint/history/single`
@@ -49,7 +49,7 @@ export default class GerodotServices {
     const res = await fetch(`${API_URL_FILE}`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        // 'Content-Type': 'multipart/form-data',
         'Authorization': 'Bearer ' + localStorage.authToken
       },
       body: formData
