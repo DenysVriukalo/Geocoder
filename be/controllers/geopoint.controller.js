@@ -12,8 +12,8 @@ exports.create = (req, res) => {
             lon: req.body.lon,
             placeId: req.body.placeId,
             uploadedFileId: null
-        }).catch((ex)=>{
-            console.log(">>Error whlie saving geopoint to DB "+ex);
+        }).catch((err)=>{
+            console.log(">>Error whlie saving geopoint to DB "+err);
             res.send();
         })
         .then((geopoint) => {   
@@ -48,8 +48,8 @@ exports.findAllSinglePage = (req, res) => {
         raw: true,
         order: [['createdAt', 'DESC']],
         limit: 10
-    }).catch((ex)=>{
-        console.log(">>Error while searching geopoints "+ex);
+    }).catch((err)=>{
+        console.log(">>Error while searching geopoints "+err);
         res.send();
     })
     .then(geopoints => {

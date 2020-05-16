@@ -8,9 +8,9 @@ exports.create = (user) => {
         email: user.email,
         password: user.password,
         createdAt: user.createdAt
-    }).catch((ex)=>
+    }).catch((err)=>
     {
-        console.log(">>Error while user creating "+ex);
+        console.log(">>Error while user creating "+err);
         res.send();
     }).then((user) => {
         console.log(">> Created user: " + JSON.stringify(user, null, 4));
