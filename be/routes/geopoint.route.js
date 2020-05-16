@@ -2,7 +2,7 @@ const express = require('express');
 const geopoint = require('../controllers/geopoint.controller');
 const router = express.Router();
 
-router.post('/geopoint', (req, res) => {
+router.post('/geopoint/save', (req, res) => {
     geopoint.create(req, res);
 })
 
