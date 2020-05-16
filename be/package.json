@@ -21,6 +21,7 @@
   "homepage": "https://github.com/DenysVriukalo/Geocoder#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "connect-multiparty": "^2.2.0",
     "cors": "^2.8.5",
     "csv-parser": "^2.3.2",
     "dotenv": "^8.2.0",

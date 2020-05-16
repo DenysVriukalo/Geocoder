@@ -7,7 +7,11 @@ const geocodeRoute = require("./routes/geocodeRoute")
 const db = require("./models");
 
 const app = express();
-const urlencodedParser = bodyParser.urlencoded({extended: false});
+
+// const urlencodedParser = bodyParser.urlencoded({extended: false});
+app.use(bodyParser.urlencoded());
+// app.use(bodyParser.json());
+
 
 //------------------------------
 //db.sequelize.sync();

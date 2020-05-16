@@ -10,7 +10,7 @@ exports.create = (req, res) => {
     /*var content = fileParser.parse(req.body.file.content);
     
     UploadedFile.create({
-        name: req.body.file.name,
+        name: req.files.file.originalFilename,
         content: content.join('\n'),
         userId: req.body.userId,
     }).catch((err) => {
@@ -20,11 +20,12 @@ exports.create = (req, res) => {
     const userId = 0;
     const fileId = 1;
 
-    console.log(req.body.file);
-    res.send();
+    //console.log(req.files.file);
+    var places = fileParser.parse(req.files.file.path);
 
-    /*geocoder.batchGeocode(req.body.addresses)
+    geocoder.batchGeocode(places)
     .then((geocodedPlaces) => {
+        console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
         var geopoints = [];
         for(let i = 0; i < geocodedPlaces.length; i++){
             console.log(userId);
@@ -32,7 +33,7 @@ exports.create = (req, res) => {
             console.log(geocodedPlaces[i].value[0]);
 
             let geopoint = {
-                address: req.body.addresses[i].address,
+                address: places[i],
                 lat: geocodedPlaces[i].value[0].latitude,
                 lon: geocodedPlaces[i].value[0].longitude,
                 placeId: geocodedPlaces[i].value[0].extra.googlePlaceId,
@@ -53,7 +54,7 @@ exports.create = (req, res) => {
         res.send(
             JSON.stringify(geopoints)
         );
-    });*/
+    });
     
 };
 

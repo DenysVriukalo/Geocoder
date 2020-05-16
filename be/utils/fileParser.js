@@ -40,11 +40,9 @@ var parseCsvFile = (filename) => {
     return adresses;
 };
 
-var parse = (filename) => {
+exports.parse = (filename) => {
     if (path.extname(filename) == '.xls' || path.extname(filename) == '.xlsx')
         return parseExcelFile(filename);
     else if (path.extname(filename) == '.csv')
         return parseCsvFile(filename);
 };
-
-module.exports=parse;
