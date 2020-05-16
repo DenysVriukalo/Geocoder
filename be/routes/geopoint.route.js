@@ -10,4 +10,8 @@ router.post('/geopoint/hist/single', (req, res) => {
     geopoint.findAllSinglePage(req, res);
 })
 
+router.post('/geopoint/hist/all', (req, res) => {
+    geopoint.findAll(req, res);
+})
+
 module.exports = router;

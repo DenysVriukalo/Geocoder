@@ -47,7 +47,7 @@ exports.findAllSinglePage = (req, res) => {
     });
 
     Geopoint.findAll({
-        attributes: ['id', 'address'],
+        attributes: ['id', 'address', 'lat', 'lon', 'placeId'],
         where: { uploadedFileId: null //,userId: id
          },
         offset: ((index - 1) * 10),
@@ -56,7 +56,7 @@ exports.findAllSinglePage = (req, res) => {
         limit: 10
     }).then(geopoints => {
         console.log(geopoints);
-        res.send(JSON.stringify({ maxPages: maxPage, geopoints }))
+        res.send(JSON.stringify({ maxPages: maxPage, geopoints: geopoints }))
     }).catch((err) => {
         console.log(">> Error while searching geopoints: ", err);
     });
@@ -73,7 +73,28 @@ exports.findOneGeopoint = (req, res) => {
 } 
 
 exports.findAll = (req, res) => {
-  
+    var pageIndex = req.body.pageindex;
+
+    var maxPage = Geopoint.count({
+        col: 'id',
+        where: { uploadedFileId: null }
+    }).catch((err) => {
+        console.log(">> Error while counting geopoints: ", err);
+        return 0;
+    });
+
+    Geopoint.findAll({
+        attributes: ['id', 'address', 'lat', 'lon', 'placeId'],
+        offset: ((index - 1) * 10),
+        raw: true,
+        order: [['createdAt', 'DESC']],
+        limit: 10
+    }).then(geopoints => {
+        console.log(geopoints);
+        res.send(JSON.stringify({ maxPages: maxPage, geopoints: geopoints }))
+    }).catch((err) => {
+        console.log(">> Error while searching geopoints: ", err);
+    });
 };
 
 exports.findOne = (req, res) => {
