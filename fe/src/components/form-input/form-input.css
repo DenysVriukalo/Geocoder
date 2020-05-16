@@ -10,6 +10,7 @@
   background-color: transparent;
   outline: none;
   text-align: left;
+  cursor: pointer;
 }
 
 .input::placeholder, .input {

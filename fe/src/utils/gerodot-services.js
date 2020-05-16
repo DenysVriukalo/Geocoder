@@ -2,8 +2,8 @@ import API_KEY from '../utils/api-key';
 
 const API_URL = 'http://localhost:8080';
 
-const API_URL_ADDRESS = `${API_URL}/geopoint`;
-const API_URL_FILE = `${API_URL}/uploadedFile`;
+const API_URL_ADDRESS = `/geopoint`;
+const API_URL_FILE = `/uploadedFile`;
 
 const API_URL_ADDRESSES_HISTORY = `${API_URL}/geopoint/history/single`
 const API_URL_FILES_HISTORY = `${API_URL}/uploadedFile/history`
