@@ -5,22 +5,13 @@ const geocoder = require("../utils/geocoder");
 
 exports.create = (req, res) => {
 
-    //Geocode query
-    geocoder.geocode(req.body.address)
-    .catch((ex)=>
-    {
-        console.log(">>Error while geocoding "+ex);
-        res.send();
-    })
-    .then((geocodedPlace)=>{
-        //Saving in DB
+        //Saving in DB  
         Geopoint.create({
             address: req.body.address,
-            lat: geocodedPlace[0].latitude,
-            lon: geocodedPlace[0].longitude,
-            placeId: geocodedPlace[0].extra.googlePlaceId,
-            //userId: req.body.userId,
-            uploadedFileId: req.body.uploadedFileId
+            lat: req.body.lat,
+            lon: req.body.lon,
+            placeId: req.body.placeId,
+            uploadedFileId: null
         }).catch((ex)=>{
             console.log(">>Error whlie saving geopoint to DB "+ex);
             res.send();
@@ -29,18 +20,14 @@ exports.create = (req, res) => {
             //Response
             res.JSON(
                 {
-                    id: geopoint.id,
-                    lat: geopoint.lat,
-                    lon: geopoint.lon,
-                    placeId: geopoint.placeId
+                    id: geopoint.id
                 });
             
             return geopoint;
         }).catch((err) => {
-            console.log(">> Error while creating geopoint: ", err);
+            console.log(">> Error while sending geopoint id: ", err);
             res.send();
         });
-    })
 };
 
 exports.findAllSinglePage = (req, res) => {
