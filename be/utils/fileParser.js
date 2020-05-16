@@ -58,6 +58,7 @@ var formingBatch = (adresses) => {
     return ads;
 };
 
+<<<<<<< HEAD
 var parse = (file) => {
     if (path.extname(file.originalFilename) == '.xls' || path.extname(file.originalFilename) == '.xlsx')
         return parseExcelFile(file.path);
@@ -66,3 +67,11 @@ var parse = (file) => {
 };
 
 module.exports = parse;
+=======
+exports.parse = (filename) => {
+    if (path.extname(filename) == '.xls' || path.extname(filename) == '.xlsx')
+        return parseExcelFile(filename);
+    else if (path.extname(filename) == '.csv')
+        return parseCsvFile(filename);
+};
+>>>>>>> e7aa84c84019a330a166f0f3a63b00a0233cc6e4
