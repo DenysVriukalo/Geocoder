@@ -6,10 +6,10 @@ module.exports = (sequelize, Sequelize) => {
                 type: Sequelize.CHAR(200)
             },
             lat: {
-                type: Sequelize.CHAR(15)
+                type: Sequelize.CHAR(50)
             },
             lon: {
-                type: Sequelize.CHAR(15)
+                type: Sequelize.CHAR(50)
             },
             placeId: {
                 type: Sequelize.CHAR(50)

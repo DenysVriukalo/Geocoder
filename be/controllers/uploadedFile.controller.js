@@ -25,9 +25,9 @@ exports.create = (req, res) => {
 
     geocoder.batchGeocode(places)
     .then((geocodedPlaces) => {
-        console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
         var geopoints = [];
-        for(let i = 0; i < geocodedPlaces.length; i++){
+        let obj = {};
+        for(var i = 0; i < geocodedPlaces.length; i++){
             console.log(userId);
             console.log(fileId);
             console.log(geocodedPlaces[i].value[0]);
@@ -40,7 +40,7 @@ exports.create = (req, res) => {
                 //userId: userId,
                 //uploadedFileId: fileId
             };
-
+            obj = geopoint;
             console.log(geocodedPlaces[i].value[0]);
 
             geopoints.push(geopoint);
