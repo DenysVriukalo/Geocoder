@@ -9,20 +9,22 @@ var parseExcelFile = (filename) => {
     //open file
     //adressees - array with adresses
     var adresses = [];
+    let data = [];
     try {
         var wb = xlsx.readFile(filename);
         //read 1st sheet
         var worksheet = wb.Sheets[wb.SheetNames[0]];
         //convert data to json
         //data - array of json objects
-        let data = xlsx.utils.sheet_to_json(worksheet);
+        data = xlsx.utils.sheet_to_json(worksheet);
     }
     catch (ex) {
+        console.log('ERR', ex);
         return adresses;
     }
     //making string with adress
     try {
-        data.forEach(function (val, i, data) {
+        data.forEach(function (val, i) {
             if (i != 0) {
                 var adress = val.область + '  ' + val.область_тип + ' ';
                 if (val.район != null) adress += val.район + ' ' + val.район_тип;
@@ -32,7 +34,7 @@ var parseExcelFile = (filename) => {
         });
     }
     catch (ex) {
-        
+        console.error(ex)
     }
 
     return adresses;
@@ -78,12 +80,14 @@ var formingBatch = (adresses) => {
 
 exports.parse = (filename) => {
     try {
+        console.log('FILE', filename);
         if (path.extname(filename) == '.xls' || path.extname(filename) == '.xlsx')
             return parseExcelFile(filename);
         else if (path.extname(filename) == '.csv')
             return parseCsvFile(filename);
     }
     catch (ex) {
+        console.log(ex);
         return [];
     }
 };
