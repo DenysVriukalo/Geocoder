@@ -29,8 +29,7 @@ exports.create = (req, res) => {
             
             let geopoint = {
                 address: places[i],
-                lat: geocodedPlaces[i].value[0].latitude,
-                lon: geocodedPlaces[i].value[0].longitude,
+                coords: {lat: geocodedPlaces[i].value[0].latitude, lng: geocodedPlaces[i].value[0].longitude },
                 placeId: geocodedPlaces[i].value[0].extra.googlePlaceId,
             };
             obj = geopoint;

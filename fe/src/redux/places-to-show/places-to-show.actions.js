@@ -22,11 +22,13 @@ export const actionSetPlacesByUserInput = address => async dispatch => {
 // By User File Uploaded
 export const actionSetPlacesByUserUpload = file => async dispatch => {
   const res = await dispatch(actionPromise('GerodotApi', GerodotServices.postFile(file)));
+  
   if (!res) {
     console.log('No response')
     return;
   }
-  const places = res.geopoints;
+  
+  const places = res;
   dispatch(actionSetPlaces(places));
 };
 
