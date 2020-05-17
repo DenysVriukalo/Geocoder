@@ -7,25 +7,23 @@ const geocoder = require("../utils/geocoder");
 const Geopoint = db.geopoint;
 
 exports.create = (req, res) => {
-    var places = fileParser.parse(req.files.file.path);
+    const places = fileParser.parse(req.files.file.path);
 
     UploadedFile.create({
         name: req.files.file.originalFilename,
         content: places.join('\n'),
     }).catch((err) => {
         console.log(">> Error while creating uploaded file: ", err);
-        res.send();
     });
 
     geocoder.batchGeocode(places)
     .catch((err)=>{
         console.log('>> Error while geocoding a batch: ', err);
-        res.send();
     })
     .then((geocodedPlaces) => {
         console.log('');
         
-        var geopoints = [];
+        const geopoints = [];
         let obj = {};
         for(var i = 0; i < geocodedPlaces.length; i++){
             
@@ -37,22 +35,14 @@ exports.create = (req, res) => {
             };
             obj = geopoint;
             geopoints.push(geopoint);
+            console.log("geopoints",geopoints )
         }
-        try{
-            
-        }
-        catch(err){
-            res.send();
-            console.log('>> Error while geocoding a batch: ', err);
-        }
-
         Geopoint.bulkCreate(geopoints)
         .catch((err) => {
             console.log(">> Error while creating geopoint: ", err);
-            res.send();
         });
         
-        res.json(geopoints);
+       return res.json(geopoints);
     });
     
 };

@@ -6,6 +6,7 @@ const multipart = require('connect-multiparty');
 const multipartMiddleware = multipart();
 
 router.post('/uploadedFile', multipartMiddleware, (req, res) => {
+    console.log(req.files)
     uploadedFile.create(req, res);
 })
 

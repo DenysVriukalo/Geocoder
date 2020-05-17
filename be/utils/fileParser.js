@@ -80,7 +80,6 @@ var formingBatch = (adresses) => {
 
 exports.parse = (filename) => {
     try {
-        console.log('FILE', filename);
         if (path.extname(filename) == '.xls' || path.extname(filename) == '.xlsx')
             return parseExcelFile(filename);
         else if (path.extname(filename) == '.csv')
