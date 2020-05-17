@@ -8,9 +8,9 @@ const Header = props => (
   <header className="header">
     <div className="header__container">
       <Logo logoSrc="/images/logo.png" />
-      <UserBlock avatar={""} name={'UserName'}>
+      {/* <UserBlock avatar={""} name={'UserName'}>
         <CustomButton text="Logout" large onClick={() => console.log('logout')} />
-      </UserBlock>
+      </UserBlock> */}
     </div>
   </header>
 );
