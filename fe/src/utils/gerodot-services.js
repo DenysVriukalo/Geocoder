@@ -54,6 +54,7 @@ export default class GerodotServices {
       },
       body: formData
     });
+    console.log("res from server", await res.json())
     return await res.json();
   }
 
