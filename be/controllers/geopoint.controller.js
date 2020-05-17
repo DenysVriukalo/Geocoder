@@ -72,14 +72,15 @@ exports.findOneGeopoint = (req, res) => {
 } 
 
 exports.findAll = (req, res) => {
-    var pageIndex = req.body.pageindex;
-
-    var maxPage = Geopoint.count({
+    const pageIndex = req.body.pageindex;
+    const maxRow = Geopoint.count({
         col: 'id'
-    }).catch((err) => {
+    })
+    .catch((err) => {
         console.log(">> Error while counting geopoints: ", err);
         return 0;
     });
+    const maxPage = Math.floor((maxRow-1)/10) + 1;
 
     Geopoint.findAll({
         attributes: ['id', 'address', 'lat', 'lon', 'placeId'],
@@ -92,7 +93,7 @@ exports.findAll = (req, res) => {
         console.log(">> Error while searching geopoints: ", err);
         res.send();
     }).then(geopoints => {
-        res.JSON({ maxPages: maxPage, geopoints: geopoints })
+        res.JSON({ maxPage: maxPage, geopoints: geopoints })
     }).catch((err) => {
         console.log(">> Error while sending geopoints: ", err);
         res.send();
