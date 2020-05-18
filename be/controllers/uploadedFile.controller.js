@@ -14,17 +14,24 @@ exports.create = (req, res) => {
         console.log('>> Error while geocoding a batch: ', err);
     })
     .then((geocodedPlaces) => {
+        let geopointsDB = [];
         let geopoints = [];
 
         try{
             for(let i = 0; i < geocodedPlaces.length; i++){
-                let geopoint = {
+                let geopointDB = {
                     address: places[i],
                     lat: geocodedPlaces[i].value[0].latitude,
                     lon: geocodedPlaces[i].value[0].longitude,
                     placeId: geocodedPlaces[i].value[0].extra.googlePlaceId,
                 };
-                obj = geopoint;
+                geopointsDB.push(geopointDB);
+                let geopoint = {
+                    address: places[i],
+                    coords:{lat: geocodedPlaces[i].value[0].latitude,
+                    lng: geocodedPlaces[i].value[0].longitude},
+                    placeId: geocodedPlaces[i].value[0].extra.googlePlaceId,
+                };
                 geopoints.push(geopoint);
             }
         }
@@ -33,7 +40,7 @@ exports.create = (req, res) => {
             console.log('>> Error while geocoding a batch: ', err);
         }
 
-        Geopoint.bulkCreate(geopoints)
+        Geopoint.bulkCreate(geopointsDB)
         .catch((err) => {
             console.log(">> Error while creating geopoint: ", err);
         });
@@ -46,7 +53,7 @@ exports.create = (req, res) => {
             res.send();
         });
 
-        res.json(geopoints);
+        
         
        return res.json(geopoints);
     });

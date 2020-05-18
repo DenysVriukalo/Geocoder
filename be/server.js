@@ -42,7 +42,9 @@ app.use(middleware);
 app.use('/', require('./routes/geopoint.route.js'));
 app.use('/', require('./routes/user.route.js'));
 app.use('/', require('./routes/uploadedFile.route.js'));
-
+app.get('/', (req, res) => {
+  res.send('Hello from gerodot')
+})
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
