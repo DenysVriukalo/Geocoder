@@ -31,7 +31,7 @@
     "nominatim-client": "^1.0.1",
     "nominatim-geocoder": "^0.1.4",
     "sequelize": "^5.21.7",
-    "xlsx": "^0.16.0"
+    "xlsx": "^0.17.0"
   },
   "devDependencies": {}
 }
